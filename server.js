@@ -1,14 +1,33 @@
-import http from 'http';
+import express from 'express';
+import config from './config';
+import apiRouter from './api';
 
 
-const server = http.createServer();
+//create express
+const server = express();
 
-server.on('request',(req,res) => {
-  res.write('Hello Http!\n');
-  setTimeout( ()=>{
-    res.write('I can stram !\n');
-    res.end();
-  }, 3000);
+
+//server side routing support all get post etc...
+server.get('/',(req,res) => {
+  res.render('index',{
+    content: ' Hello Dynamic view engin ejs!'
+  });
 });
 
-server.listen(8080);
+//view engine currently ejs
+server.set('view engine','ejs');
+
+//set the api Router
+server.use('/api',apiRouter);
+
+//server side routing support all get post etc...
+server.use(express.static('public'));
+// server.get('/about.html',( req, res ) => {
+//   fs.readFile('./public/about.html', ( err , data )=>{
+//     res.send(data.toString());
+//   });
+// });
+
+server.listen(config.port, () =>{
+  console.info('Express is litening at port : ',config.port);
+});
