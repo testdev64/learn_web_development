@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import Header from './Header';
+import ContestPreview from './ContestPreview';
 
 
 //class based components
@@ -22,7 +23,9 @@ class App extends React.Component {
      <div className="App">
        <Header handleMessage = {this.state.pageHeader}/>
        <div>
-          ...
+         {this.props.contests.map(contests =>
+           <ContestPreview {...contests} />
+         )}
        </div>
      </div>
    );
